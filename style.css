@@ -1,0 +1,437 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* ============================================
+   스테이지 공통 스타일
+   ============================================ */
+.stage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+.stage.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ============================================
+   비밀 단계
+   ============================================ */
+#secret-stage {
+    background-color: #000;
+}
+
+/* 비밀 단계는 처음에 보임 */
+#secret-stage.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* opening 클래스 추가되면 전체가 서서히 사라짐 */
+#secret-stage.opening {
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.door-left,
+.door-right {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #000;
+    z-index: 100;
+    transition: opacity 1.2s ease;
+}
+
+.door-left {
+    left: 0;
+}
+
+.door-right {
+    right: 0;
+}
+
+#secret-stage.opening .door-left,
+#secret-stage.opening .door-right {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.secret-content {
+    position: relative;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.eyes {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    animation: pulse 2s infinite;
+}
+
+.eye {
+    width: 4rem;
+    height: 4rem;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pupil {
+    width: 2rem;
+    height: 2rem;
+    background-color: black;
+    border-radius: 50%;
+    animation: lookAround 3s infinite;
+}
+
+@keyframes lookAround {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-0.5rem); }
+    75% { transform: translateX(0.5rem); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.secret-text {
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+.speech-bubble-btn {
+    background-color: white;
+    color: black;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.speech-bubble-btn:hover {
+    background-color: #e5e5e5;
+    transform: scale(1.05);
+}
+
+.bubble-icon {
+    position: absolute;
+    top: -0.75rem;
+    right: -0.75rem;
+    font-size: 1.5rem;
+}
+
+/* ============================================
+   우편함 단계
+   ============================================ */
+#mailbox-stage {
+    background: linear-gradient(to bottom, #bae6fd, #f0f9ff);
+}
+
+.instruction-text {
+    font-size: 1.8rem;
+    color: #374151;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.mailbox-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mailbox {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.mailbox:hover {
+    transform: scale(1.05);
+}
+
+.mailbox-top {
+    width: 12rem;
+    height: 14rem;
+    background: linear-gradient(to bottom, #dc2626, #b91c1c);
+    border-radius: 1.5rem 1.5rem 0 0;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.mailbox-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6rem;
+    background-color: #b91c1c;
+    border-radius: 1.5rem 1.5rem 0 0;
+    border-bottom: 4px solid #991b1b;
+}
+
+.mailbox-door {
+    position: absolute;
+    top: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8rem;
+    height: 7rem;
+    background-color: #991b1b;
+    border-radius: 0 0 4rem 4rem;
+    transition: transform 0.6s ease;
+    transform-origin: top center;
+    overflow: hidden;
+}
+
+.mailbox.opening .mailbox-door {
+    transform: translateX(-50%) rotateX(-90deg);
+}
+
+.letter-inside {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5rem;
+    height: 6rem;
+    background: linear-gradient(to bottom right, #fffbeb, #fef3c7);
+    border: 2px solid #fde68a;
+    border-radius: 0.25rem;
+    opacity: 0;
+    transition: transform 0.8s ease 0.3s, opacity 0.6s ease 0.3s;
+}
+
+.mailbox.opening .letter-inside {
+    transform: translateX(-50%) translateY(-8rem);
+    opacity: 1;
+}
+
+.mail-icon {
+    position: absolute;
+    top: 6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3rem;
+    height: 3rem;
+    color: white;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.mailbox.opening .mail-icon {
+    opacity: 0;
+}
+
+.mailbox-base {
+    width: 12rem;
+    height: 1rem;
+    background-color: #4b5563;
+    border-radius: 0 0 0.5rem 0.5rem;
+    margin-top: -1px;
+}
+
+.mailbox-pole {
+    width: 0.75rem;
+    height: 8rem;
+    background: linear-gradient(to right, #dc2626, #b91c1c);
+    margin-top: -0.5rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   편지 봉투 단계
+   ============================================ */
+#letter-stage {
+    background: linear-gradient(to bottom, #bae6fd, #f0f9ff);
+}
+
+.envelope {
+    width: 20rem;
+    height: 24rem;
+    background: linear-gradient(to bottom right, #fffbeb, #fef3c7);
+    border-radius: 0.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    border: 4px solid #fde68a;
+    position: relative;
+    cursor: grab;
+    animation: flyIn 1s ease-out;
+    user-select: none;
+}
+
+.envelope:active {
+    cursor: grabbing;
+}
+
+.swipe-instruction {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #1f2937;
+    font-size: 1rem;
+    font-weight: 600;
+    z-index: 3;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 33%;
+    background: linear-gradient(to bottom right, #fca5a5, #ef4444);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transition: transform 0.6s ease;
+    z-index: 2;
+}
+
+.envelope.opening .envelope-flap {
+    transform: rotateX(-180deg);
+}
+
+.envelope-recipient {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: serif;
+    color: #374151;
+}
+
+@keyframes flyIn {
+    0% {
+        transform: translateY(-100vh) rotate(-10deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   열린 편지 단계
+   ============================================ */
+#opened-stage {
+    background: linear-gradient(to bottom, #fffbeb, #ffedd5);
+    padding: 2rem;
+}
+
+.letter-content {
+    max-width: 42rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    padding: 3rem;
+    border: 4px solid #fde68a;
+}
+
+.letter-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #92400e;
+}
+
+.letter-body {
+    margin: 2rem 0;
+    color: #374151;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    font-family: serif;
+}
+
+.placeholder-text {
+    text-align: center;
+    font-style: italic;
+    color: #9ca3af;
+}
+
+.letter-footer {
+    margin-top: 3rem;
+    text-align: right;
+}
+
+.letter-from {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* ============================================
+   반응형
+   ============================================ */
+@media (max-width: 768px) {
+    .secret-text {
+        font-size: 1.2rem;
+        padding: 0 1rem;
+    }
+    
+    .instruction-text {
+        font-size: 1.4rem;
+    }
+    
+    .envelope {
+        width: 18rem;
+        height: 22rem;
+    }
+    
+    .letter-content {
+        padding: 2rem;
+    }
+    
+    .letter-title {
+        font-size: 2rem;
+    }
+    
+    .letter-body {
+        font-size: 1rem;
+    }
+}

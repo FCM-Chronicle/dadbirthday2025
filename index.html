@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>특별한 편지</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 비밀 단계 -->
+    <div id="secret-stage" class="stage active">
+        <div class="door-left"></div>
+        <div class="door-right"></div>
+        
+        <div class="secret-content">
+            <div class="eyes">
+                <div class="eye">
+                    <div class="pupil"></div>
+                </div>
+                <div class="eye">
+                    <div class="pupil"></div>
+                </div>
+            </div>
+            
+            
+            <p class="secret-text">
+                주변에 아무도 없게<br />외딴 곳으로 가세요
+            </p>
+            
+            <button id="secret-btn" class="speech-bubble-btn">
+                <span class="bubble-icon">💬</span>
+                응, 이동했어!
+            </button>
+        </div>
+    </div>
+
+  <!-- 우편함 단계 -->
+<div id="mailbox-stage" class="stage">
+    <p class="instruction-text">눌러서 확인해보세요</p>
+    
+    <div class="mailbox-container">
+        <button id="mailbox-btn" class="mailbox">
+            <div class="mailbox-top"></div>
+            <div class="mailbox-door">
+                <div class="letter-inside"></div>
+            </div>
+            <svg class="mail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            <div class="mailbox-base"></div>
+        </button>
+        <div class="mailbox-pole"></div>
+    </div>
+</div>
+
+    <!-- 편지 봉투 단계 -->
+    <div id="letter-stage" class="stage">
+        <div id="envelope" class="envelope">
+            <p class="swipe-instruction">위로 스와이프하여 열기 ↑</p>
+            <div class="envelope-flap"></div>
+            <p class="envelope-recipient">아버지께</p>
+        </div>
+    </div>
+
+    <!-- 열린 편지 단계 -->
+    <div id="opened-stage" class="stage">
+        <div class="letter-content">
+            <h1 class="letter-title">🎉 생신을 축하드립니다 🎉</h1>
+            
+            <div class="letter-body">
+                <p class="placeholder-text">[여기에 편지 내용을 추가하세요]</p>
+            </div>
+            
+            <div class="letter-footer">
+                <p class="letter-from">사랑하는 자녀 올림</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
