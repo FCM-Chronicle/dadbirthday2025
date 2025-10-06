@@ -383,14 +383,14 @@ body {
 .letter-body {
     margin: 2rem 0;
     color: #000000;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.8;
     font-family: serif;
 }
 
 .placeholder-text {
     text-align: center;
-    color: #9ca3af;
+    color: #000000;
 }
 
 .letter-footer {
@@ -435,3 +435,4 @@ body {
     }
 
 }
+
